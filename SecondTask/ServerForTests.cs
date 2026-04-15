@@ -14,6 +14,10 @@ public static class ServerForTests
     private static int _activeWriters = 0;
     private static readonly object _statsLock = new object();
 
+    // Флаг для тестового режима
+    private static bool _testMode = false;
+    private static int _testDelayMs = 0;
+
     // ========== ОСНОВНЫЕ МЕТОДЫ ==========
 
     public static int GetCount()
@@ -25,7 +29,10 @@ public static class ServerForTests
             IncrementActiveReaders();
 
             // Имитация небольшой работы (для тестов)
-            Thread.Sleep(1);
+            if (_testMode && _testDelayMs > 0)
+            {
+                Thread.Sleep(_testDelayMs);
+            }
 
             return _count;
         }
@@ -104,6 +111,23 @@ public static class ServerForTests
         {
             return _activeWriters;
         }
+    }
+
+    /// <summary>
+    /// Включить задержку при чтениии для нагрузочного теста
+    /// </summary>
+    public static void EnableTestMode(int delayMs = 10)
+    {
+        _testMode = true;
+        _testDelayMs = delayMs;
+    }
+
+    /// <summary>
+    /// Выключить задержку при чтениии для нагрузочного теста
+    /// </summary>
+    public static void DisableTestMode()
+    {
+        _testMode = false;
     }
 
     // ========== ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ ДЛЯ СТАТИСТИКИ ==========
