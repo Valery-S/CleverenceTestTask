@@ -9,11 +9,11 @@ public class ServerTests
         ServerForTests.Reset();
         ServerForTests.EnableTestMode(delayMs: 10);
 
-        // Запускаем 10 читателей и проверяем, сколько работают одновременно
+        // Р—Р°РїСѓСЃРєР°РµРј 10 С‡РёС‚Р°С‚РµР»РµР№ Рё РїСЂРѕРІРµСЂСЏРµРј, СЃРєРѕР»СЊРєРѕ СЂР°Р±РѕС‚Р°СЋС‚ РѕРґРЅРѕРІСЂРµРјРµРЅРЅРѕ
         int maxParallelReaders = await ServerForTests.TestReadersParallelism(10, 200);
 
-        // Должно быть больше 1 (значит работали параллельно)
-        Assert.True(maxParallelReaders > 1, $"Максимум параллельных читателей: {maxParallelReaders}");
+        // Р”РѕР»Р¶РЅРѕ Р±С‹С‚СЊ Р±РѕР»СЊС€Рµ 1 (Р·РЅР°С‡РёС‚ СЂР°Р±РѕС‚Р°Р»Рё РїР°СЂР°Р»Р»РµР»СЊРЅРѕ)
+        Assert.True(maxParallelReaders > 1, $"РњР°РєСЃРёРјСѓРј РїР°СЂР°Р»Р»РµР»СЊРЅС‹С… С‡РёС‚Р°С‚РµР»РµР№: {maxParallelReaders}");
     }
 
     [Fact]
@@ -21,18 +21,18 @@ public class ServerTests
     {
         ServerForTests.Reset();
 
-        // Запускаем 5 писателей
+        // Р—Р°РїСѓСЃРєР°РµРј 5 РїРёСЃР°С‚РµР»РµР№
         int maxParallelWriters = await ServerForTests.TestWritersSequential(5, 200);
 
-        // Должно быть не больше 1
-        Assert.True(maxParallelWriters <= 1, $"Максимум параллельных писателей: {maxParallelWriters}");
+        // Р”РѕР»Р¶РЅРѕ Р±С‹С‚СЊ РЅРµ Р±РѕР»СЊС€Рµ 1
+        Assert.True(maxParallelWriters <= 1, $"РјР°РєСЃРёРјСѓРј РїР°СЂР°Р»Р»РµР»СЊРЅС‹С… РїРёСЃР°С‚РµР»РµР№: {maxParallelWriters}");
     }
 
     [Fact]
     public async Task Test_ReadersWaitForWriters()
     {
         bool readersWaited = await ServerForTests.TestReadersWaitForWriters();
-        Assert.True(readersWaited, "Читатели должны ждать окончания записи");
+        Assert.True(readersWaited, "С‡РёС‚Р°С‚РµР»Рё РґРѕР»Р¶РЅС‹ Р¶РґР°С‚СЊ РѕРєРѕРЅС‡Р°РЅРёСЏ Р·Р°РїРёСЃРё");
     }
 
     [Fact]
@@ -40,10 +40,10 @@ public class ServerTests
     {
         ServerForTests.Reset();
 
-        // 5 читателей, 3 писателя, каждый делает 100 операций
+        // 5 С‡РёС‚Р°С‚РµР»РµР№, 3 РїРёСЃР°С‚РµР»СЏ, РєР°Р¶РґС‹Р№ РґРµР»Р°РµС‚ 100 РѕРїРµСЂР°С†РёР№
         var (finalValue, _) = await ServerForTests.RunMixedLoad(5, 3, 100);
 
-        // Писатели добавили 3 * 100 = 300
+        // РџРёСЃР°С‚РµР»Рё РґРѕР±Р°РІРёР»Рё 3 * 100 = 300
         Assert.Equal(300, finalValue);
     }
 
@@ -53,13 +53,13 @@ public class ServerTests
         ServerForTests.Reset();
         ServerForTests.DisableTestMode();
 
-        // Замеряем время выполнения 100 читателей
+        // Р—Р°РјРµСЂСЏРµРј РІСЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ 100 С‡РёС‚Р°С‚РµР»РµР№
         var sw = System.Diagnostics.Stopwatch.StartNew();
         await ServerForTests.RunMultipleReaders(100, 10);
         sw.Stop();
 
-        // Если бы читатели блокировали друг друга, время было бы ~100 * 10 * 1ms = 1000ms
-        // При параллельном чтении должно быть значительно меньше
-        Assert.True(sw.ElapsedMilliseconds < 500, $"Время выполнения: {sw.ElapsedMilliseconds}ms");
+        // Р•СЃР»Рё Р±С‹ С‡РёС‚Р°С‚РµР»Рё Р±Р»РѕРєРёСЂРѕРІР°Р»Рё РґСЂСѓРі РґСЂСѓРіР°, РІСЂРµРјСЏ Р±С‹Р»Рѕ Р±С‹ ~100 * 10 * 1ms = 1000ms
+        // РџСЂРё РїР°СЂР°Р»Р»РµР»СЊРЅРѕРј С‡С‚РµРЅРёРё РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ Р·РЅР°С‡РёС‚РµР»СЊРЅРѕ РјРµРЅСЊС€Рµ
+        Assert.True(sw.ElapsedMilliseconds < 500, $"Р’СЂРµРјСЏ РІС‹РїРѕР»РЅРµРЅРёСЏ: {sw.ElapsedMilliseconds}ms");
     }
 }

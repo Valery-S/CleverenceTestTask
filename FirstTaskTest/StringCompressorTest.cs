@@ -2,7 +2,7 @@ using Xunit;
 
 public class StringCompressorTests
 {
-    // ========== ÒÅÑÒÛ ÄËß COMPRESS ==========
+    // ========== Ð¢ÐµÑÑ‚Ñ‹ Ð´Ð»Ñ  COMPRESS ==========
 
     [Fact]
     public void Compress_ValidInput_ReturnsCorrectResult()
@@ -18,24 +18,24 @@ public class StringCompressorTests
     }
 
     [Theory]
-    [InlineData("a", "a")]                      // îäèí ñèìâîë
-    [InlineData("abc", "abc")]                  // âñå ðàçíûå
-    [InlineData("aaabbb", "a3b3")]              // äâå ãðóïïû
-    [InlineData("", "")]                        // ïóñòàÿ ñòðîêà
-    [InlineData("aab", "a2b")]                  // ãðóïïà â íà÷àëå
-    [InlineData("abb", "ab2")]                  // ãðóïïà â êîíöå
-    [InlineData("aabb", "a2b2")]                // ÷åðåäîâàíèå
-    [InlineData("aaaaaaaaaa", "a10")]           // 10 îäèíàêîâûõ (äâóçíà÷íîå ÷èñëî)
-    [InlineData("aaaaaaaaaaa", "a11")]          // 11 îäèíàêîâûõ
-    [InlineData("zzzzzzzzzzzzzzzzzzzz", "z20")] // 20 îäèíàêîâûõ
-    [InlineData("aaabbbcccccd", "a3b3c5d")]     // ðàçíûå äëèíû ãðóïï
-    [InlineData("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "x54")] // 54 ñèìâîëà
+    [InlineData("a", "a")]                      // Ð¾Ð´Ð¸Ð½ ÑÐ¸Ð¼Ð²Ð¾Ð»
+    [InlineData("abc", "abc")]                  // Ð²ÑÐµ Ñ€Ð°Ð·Ð½Ñ‹Ðµ
+    [InlineData("aaabbb", "a3b3")]              // Ð´Ð²Ðµ Ð³Ñ€ÑƒÐ¿Ð¿Ñ‹
+    [InlineData("", "")]                        // Ð¿ÑƒÑÑ‚Ð°Â¤ ÑÑ‚Ñ€Ð¾ÐºÐ°
+    [InlineData("aab", "a2b")]                  // Ð³Ñ€ÑƒÐ¿Ð¿Ð° Ð² Ð½Ð°Ñ‡Ð°Ð»Ðµ
+    [InlineData("abb", "ab2")]                  // Ð³Ñ€ÑƒÐ¿Ð¿Ð° Ð² ÐºÐ¾Ð½Ñ†Ðµ
+    [InlineData("aabb", "a2b2")]                // Ñ‡ÐµÑ€ÐµÐ´Ð¾Ð²Ð°Ð½Ð¸Ðµ
+    [InlineData("aaaaaaaaaa", "a10")]           // 10 Ð¾Ð´Ð¸Ð½Ð°ÐºÐ¾Ð²Ñ‹Ñ… (Ð´Ð²ÑƒÐ·Ð½Ð°Ñ‡Ð½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾)
+    [InlineData("aaaaaaaaaaa", "a11")]          // 11 Ð¾Ð´Ð¸Ð½Ð°ÐºÐ¾Ð²Ñ‹Ñ…
+    [InlineData("zzzzzzzzzzzzzzzzzzzz", "z20")] // 20 Ð¾Ð´Ð¸Ð½Ð°ÐºÐ¾Ð²Ñ‹Ñ…
+    [InlineData("aaabbbcccccd", "a3b3c5d")]     // Ñ€Ð°Ð·Ð½Ñ‹Ðµ Ð´Ð»Ð¸Ð½Ñ‹ Ð³Ñ€ÑƒÐ¿Ð¿
+    [InlineData("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "x54")] // 54 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°
     public void Compress_VariousInputs_ReturnsExpected(string input, string expected)
     {
         Assert.Equal(expected, StringCompressor.Compress(input));
     }
 
-    // ========== ÒÅÑÒÛ ÄËß DECOMPRESS ==========
+    // ========== Ð¢ÐµÑÑ‚Ñ‹ Ð´Ð»Ñ DECOMPRESS ==========
 
     [Fact]
     public void Decompress_ValidCompressed_ReturnsOriginal()
@@ -51,25 +51,25 @@ public class StringCompressorTests
     }
 
     [Theory]
-    [InlineData("a", "a")]                      // áåç ÷èñëà
-    [InlineData("abc", "abc")]                  // íåñêîëüêî îäèíî÷íûõ
-    [InlineData("a3b3", "aaabbb")]              // òîëüêî ãðóïïû
-    [InlineData("a2b", "aab")]                  // ãðóïïà â íà÷àëå
-    [InlineData("ab2", "abb")]                  // ãðóïïà â êîíöå
-    [InlineData("a2b2", "aabb")]                // ÷åðåäîâàíèå
-    [InlineData("a10", "aaaaaaaaaa")]           // äâóçíà÷íîå ÷èñëî
-    [InlineData("a11", "aaaaaaaaaaa")]          // 11 ñèìâîëîâ
-    [InlineData("z20", "zzzzzzzzzzzzzzzzzzzz")] // 20 ñèìâîëîâ
-    [InlineData("a3b2c5d", "aaabbcccccd")]      // ãðóïïû ðàçíîé äëèíû
-    [InlineData("", "")]                        // ïóñòàÿ ñòðîêà
-    [InlineData("x1", "x")]                     // ÷èñëî 1 (ïî óñëîâèþ íå äîëæíî âñòðå÷àòüñÿ, íî äåêîìïðåññèÿ äîëæíà ðàáîòàòü)
+    [InlineData("a", "a")]                      // Ð±ÐµÐ· Ñ‡Ð¸ÑÐ»Ð°
+    [InlineData("abc", "abc")]                  // Ð½ÐµÑÐºÐ¾Ð»ÑŒÐºÐ¾ Ð¾Ð´Ð¸Ð½Ð¾Ñ‡Ð½Ñ‹Ñ…
+    [InlineData("a3b3", "aaabbb")]              // Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð³Ñ€ÑƒÐ¿Ð¿Ñ‹
+    [InlineData("a2b", "aab")]                  // Ð³Ñ€ÑƒÐ¿Ð¿Ð° Ð² Ð½Ð°Ñ‡Ð°Ð»Ðµ
+    [InlineData("ab2", "abb")]                  // Ð³Ñ€ÑƒÐ¿Ð¿Ð° Ð² ÐºÐ¾Ð½Ñ†Ðµ
+    [InlineData("a2b2", "aabb")]                // Ñ‡ÐµÑ€ÐµÐ´Ð¾Ð²Ð°Ð½Ð¸Ðµ
+    [InlineData("a10", "aaaaaaaaaa")]           // Ð´Ð²ÑƒÐ·Ð½Ð°Ñ‡Ð½Ð¾Ðµ Ñ‡Ð¸ÑÐ»Ð¾
+    [InlineData("a11", "aaaaaaaaaaa")]          // 11 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð¾Ð²
+    [InlineData("z20", "zzzzzzzzzzzzzzzzzzzz")] // 20 ÑÐ¸Ð¼Ð²Ð¾Ð»Ð¾Ð²
+    [InlineData("a3b2c5d", "aaabbcccccd")]      // Ð³Ñ€ÑƒÐ¿Ð¿Ñ‹ Ñ€Ð°Ð·Ð½Ð¾Ð¹ Ð´Ð»Ð¸Ð½Ñ‹
+    [InlineData("", "")]                        // Ð¿ÑƒÑÑ‚Ð°Â¤ ÑÑ‚Ñ€Ð¾ÐºÐ°
+    [InlineData("x1", "x")]                     // Ñ‡Ð¸ÑÐ»Ð¾ 1 (Ð¿Ð¾ ÑƒÑÐ»Ð¾Ð²Ð¸ÑŽ Ð½Ðµ Ð´Ð¾Ð»Ð¶Ð½Ð¾ Ð²ÑÑ‚Ñ€ÐµÑ‡Ð°Ñ‚ÑŒÑÂ¤, Ð½Ð¾ Ð´ÐµÐºÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¸Â¤ Ð´Ð¾Ð»Ð¶Ð½Ð° Ñ€Ð°Ð±Ð¾Ñ‚Ð°Ñ‚ÑŒ)
     public void Decompress_VariousInputs_ReturnsExpected(string compressed, string expected)
     {
         Assert.Equal(expected, StringCompressor.Decompress(compressed));
     }
 
-    // ========== ÑÊÂÎÇÍÛÅ ÒÅÑÒÛ (Round-trip) ==========
-    // Ïðîâåðÿåì, ÷òî ñæàòèå + äåêîìïðåññèÿ äàþò èñõîäíóþ ñòðîêó
+    // ========== Ð¡ÐºÐ²Ð¾Ð·Ð½Ñ‹Ðµ Ñ‚ÐµÑÑ‚Ñ‹ (Round-trip) ==========
+    // Ñ•Ñ€Ð¾Ð²ÐµÑ€Â¤ÐµÐ¼, Ñ‡Ñ‚Ð¾ ÑÐ¶Ð°Ñ‚Ð¸Ðµ + Ð´ÐµÐºÐ¾Ð¼Ð¿Ñ€ÐµÑÑÐ¸Â¤ Ð´Ð°ÑŽÑ‚ Ð¸ÑÑ…Ð¾Ð´Ð½ÑƒÑŽ ÑÑ‚Ñ€Ð¾ÐºÑƒ
 
     [Theory]
     [InlineData("")]
@@ -78,8 +78,8 @@ public class StringCompressorTests
     [InlineData("aaabbb")]
     [InlineData("aabbccddeeffgg")]
     [InlineData("aaaaaaaaaaaaaaaaaaaa")]        // 20 a
-    [InlineData("abacabadabacaba")]             // ïàëèíäðîì ñ ÷åðåäîâàíèåì
-    [InlineData("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")] // äëèííàÿ ñòðîêà
+    [InlineData("abacabadabacaba")]             // Ð¿Ð°Ð»Ð¸Ð½Ð´Ñ€Ð¾Ð¼ Ñ Ñ‡ÐµÑ€ÐµÐ´Ð¾Ð²Ð°Ð½Ð¸ÐµÐ¼
+    [InlineData("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")] // Ð´Ð»Ð¸Ð½Ð½Ð° ÑÑ‚Ñ€Ð¾ÐºÐ°
     public void Roundtrip_CompressThenDecompress_ReturnsOriginal(string original)
     {
         // Act
@@ -90,7 +90,7 @@ public class StringCompressorTests
         Assert.Equal(original, decompressed);
     }
 
-    // ========== ÄÎÏÎËÍÈÒÅËÜÍÛÅ ÃÐÀÍÈ×ÍÛÅ ÒÅÑÒÛ ==========
+    // ========== Ð”Ð¾Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ðµ Ð³Ñ€Ð°Ð½Ð¸Ñ‡Ð½Ñ‹Ðµ Ñ‚ÐµÑÑ‚Ñ‹ ==========
 
     [Fact]
     public void Compress_DoesNotChangeStringWithoutRepeats()
@@ -103,7 +103,7 @@ public class StringCompressorTests
     [Fact]
     public void Decompress_WithMultidigitNumbers_WorksCorrectly()
     {
-        // Èñêóññòâåííî ñîçäà¸ì ñæàòóþ ñòðîêó ñ ÷èñëàìè > 9
+        // Ð˜ÑÐºÑƒÑÑÑ‚Ð²ÐµÐ½Ð½Ð¾ ÑÐ¾Ð·Ð´Ð°Ñ‘Ð¼ ÑÐ¶Ð°Ñ‚ÑƒÑŽ ÑÑ‚Ñ€Ð¾ÐºÑƒ Ñ Ñ‡Ð¸ÑÐ»Ð°Ð¼Ð¸ > 9
         string compressed = "a12b5c123";
         string expected = new string('a', 12) + new string('b', 5) + new string('c', 123);
         Assert.Equal(expected, StringCompressor.Decompress(compressed));
