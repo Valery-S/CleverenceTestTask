@@ -16,13 +16,13 @@ public class LogStandardizerTests
         if (File.Exists(TestProblemsFile)) File.Delete(TestProblemsFile);
     }
 
-    // ========== ТЕСТЫ ПАРСИНГА ФОРМАТА 1 ==========
+    // ========== РўР•РЎРўР« РџРђР РЎРРќР“Рђ Р¤РћР РњРђРўРђ 1 ==========
 
     [Fact]
     public void ParseFormat1_ValidInformationLog_ReturnsCorrectEntry()
     {
         // Arrange
-        string line = "10.03.2025 15:14:49.523 INFORMATION Версия программы: '3.4.0.48729'";
+        string line = "10.03.2025 15:14:49.523 INFORMATION Р’РµСЂСЃРёСЏ РїСЂРѕРіСЂР°РјРјС‹: '3.4.0.48729'";
 
         // Act
         var result = LogStandardizer.ParseLogLine(line);
@@ -36,14 +36,14 @@ public class LogStandardizerTests
         Assert.Equal(523, result.Time.Milliseconds);
         Assert.Equal("INFO", result.LogLevel);
         Assert.Equal("DEFAULT", result.CallingMethod);
-        Assert.Equal("Версия программы: '3.4.0.48729'", result.Message);
+        Assert.Equal("Р’РµСЂСЃРёСЏ РїСЂРѕРіСЂР°РјРјС‹: '3.4.0.48729'", result.Message);
     }
 
     [Fact]
     public void ParseFormat1_ValidWarningLog_ReturnsCorrectEntry()
     {
         // Arrange
-        string line = "15.07.2024 10:30:22.123 WARNING Предупреждение: низкий заряд батареи";
+        string line = "15.07.2024 10:30:22.123 WARNING РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ: РЅРёР·РєРёР№ Р·Р°СЂСЏРґ Р±Р°С‚Р°СЂРµРё";
 
         // Act
         var result = LogStandardizer.ParseLogLine(line);
@@ -53,14 +53,14 @@ public class LogStandardizerTests
         Assert.Equal(new DateTime(2024, 7, 15), result.Date);
         Assert.Equal("WARN", result.LogLevel);
         Assert.Equal("DEFAULT", result.CallingMethod);
-        Assert.Equal("Предупреждение: низкий заряд батареи", result.Message);
+        Assert.Equal("РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ: РЅРёР·РєРёР№ Р·Р°СЂСЏРґ Р±Р°С‚Р°СЂРµРё", result.Message);
     }
 
     [Fact]
     public void ParseFormat1_ValidErrorLog_ReturnsCorrectEntry()
     {
         // Arrange
-        string line = "01.01.2025 00:00:01.999 ERROR Критическая ошибка";
+        string line = "01.01.2025 00:00:01.999 ERROR РљСЂРёС‚РёС‡РµСЃРєР°СЏ РѕС€РёР±РєР°";
 
         // Act
         var result = LogStandardizer.ParseLogLine(line);
@@ -69,14 +69,14 @@ public class LogStandardizerTests
         Assert.True(result.IsValid);
         Assert.Equal(new DateTime(2025, 1, 1), result.Date);
         Assert.Equal("ERROR", result.LogLevel);
-        Assert.Equal("Критическая ошибка", result.Message);
+        Assert.Equal("РљСЂРёС‚РёС‡РµСЃРєР°СЏ РѕС€РёР±РєР°", result.Message);
     }
 
     [Fact]
     public void ParseFormat1_ValidDebugLog_ReturnsCorrectEntry()
     {
         // Arrange
-        string line = "20.12.2024 23:59:59.001 DEBUG Отладочная информация";
+        string line = "20.12.2024 23:59:59.001 DEBUG РћС‚Р»Р°РґРѕС‡РЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ";
 
         // Act
         var result = LogStandardizer.ParseLogLine(line);
@@ -86,13 +86,13 @@ public class LogStandardizerTests
         Assert.Equal("DEBUG", result.LogLevel);
     }
 
-    // ========== ТЕСТЫ ПАРСИНГА ФОРМАТА 2 ==========
+    // ========== РўР•РЎРўР« РџРђР РЎРРќР“Рђ Р¤РћР РњРђРўРђ 2 ==========
 
     [Fact]
     public void ParseFormat2_ValidInfoLog_ReturnsCorrectEntry()
     {
         // Arrange
-        string line = "2025-03-10 15:14:51.882| INFO|11|MobileComputer.GetDeviceId| Код устройства: '@MINDEO-M40-D-410244015546'";
+        string line = "2025-03-10 15:14:51.882| INFO|11|MobileComputer.GetDeviceId| РљРѕРґ СѓСЃС‚СЂРѕР№СЃС‚РІР°: '@MINDEO-M40-D-410244015546'";
 
         // Act
         var result = LogStandardizer.ParseLogLine(line);
@@ -106,14 +106,14 @@ public class LogStandardizerTests
         Assert.Equal(882, result.Time.Milliseconds);
         Assert.Equal("INFO", result.LogLevel);
         Assert.Equal("MobileComputer.GetDeviceId", result.CallingMethod);
-        Assert.Equal("Код устройства: '@MINDEO-M40-D-410244015546'", result.Message);
+        Assert.Equal("РљРѕРґ СѓСЃС‚СЂРѕР№СЃС‚РІР°: '@MINDEO-M40-D-410244015546'", result.Message);
     }
 
     [Fact]
     public void ParseFormat2_ValidWarnLog_ReturnsCorrectEntry()
     {
         // Arrange
-        string line = "2024-12-01 08:15:30.123| WARN|5|Logger.Write| Предупреждение: таймаут операции";
+        string line = "2024-12-01 08:15:30.123| WARN|5|Logger.Write| РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ: С‚Р°Р№РјР°СѓС‚ РѕРїРµСЂР°С†РёРё";
 
         // Act
         var result = LogStandardizer.ParseLogLine(line);
@@ -128,7 +128,7 @@ public class LogStandardizerTests
     public void ParseFormat2_WithDifferentMillisecondLength_HandlesCorrectly()
     {
         // Arrange
-        string line = "2024-12-01 08:15:30.1| INFO|5|TestMethod| Сообщение";
+        string line = "2024-12-01 08:15:30.1| INFO|5|TestMethod| РЎРѕРѕР±С‰РµРЅРёРµ";
 
         // Act
         var result = LogStandardizer.ParseLogLine(line);
@@ -138,13 +138,13 @@ public class LogStandardizerTests
         Assert.Equal(1, result.Time.Milliseconds);
     }
 
-    // ========== ТЕСТЫ НЕВАЛИДНЫХ ЗАПИСЕЙ ==========
+    // ========== РўР•РЎРўР« РќР•Р’РђР›РР”РќР«РҐ Р—РђРџРРЎР•Р™ ==========
 
     [Fact]
     public void ParseLogLine_InvalidFormat_ReturnsInvalidEntry()
     {
         // Arrange
-        string line = "Это просто текст, не лог";
+        string line = "Р­С‚Рѕ РїСЂРѕСЃС‚Рѕ С‚РµРєСЃС‚, РЅРµ Р»РѕРі";
 
         // Act
         var result = LogStandardizer.ParseLogLine(line);
@@ -181,7 +181,7 @@ public class LogStandardizerTests
     public void ParseLogLine_PartiallyCorruptedFormat1_ReturnsInvalidEntry()
     {
         // Arrange
-        string line = "10.03.2025 15:14:49.523 UNKNOWN LEVEL Сообщение";
+        string line = "10.03.2025 15:14:49.523 UNKNOWN LEVEL РЎРѕРѕР±С‰РµРЅРёРµ";
 
         // Act
         var result = LogStandardizer.ParseLogLine(line);
@@ -190,7 +190,7 @@ public class LogStandardizerTests
         Assert.False(result.IsValid);
     }
 
-    // ========== ТЕСТЫ ФОРМАТИРОВАНИЯ ВЫВОДА ==========
+    // ========== РўР•РЎРўР« Р¤РћР РњРђРўРР РћР’РђРќРРЇ Р’Р«Р’РћР”Рђ ==========
 
     [Fact]
     public void FormatOutput_ValidEntry_ReturnsCorrectFormat()
@@ -202,7 +202,7 @@ public class LogStandardizerTests
             Time = new TimeSpan(0,15, 14, 49, 523),
             LogLevel = "INFO",
             CallingMethod = "DEFAULT",
-            Message = "Версия программы: '3.4.0.48729'",
+            Message = "Р’РµСЂСЃРёСЏ РїСЂРѕРіСЂР°РјРјС‹: '3.4.0.48729'",
             IsValid = true
         };
 
@@ -210,7 +210,7 @@ public class LogStandardizerTests
         string result = LogStandardizer.FormatOutput(entry);
 
         // Assert
-        Assert.Equal("10-03-2025\t15:14:49.523\tINFO\tDEFAULT\tВерсия программы: '3.4.0.48729'", result);
+        Assert.Equal("10-03-2025\t15:14:49.523\tINFO\tDEFAULT\tР’РµСЂСЃРёСЏ РїСЂРѕРіСЂР°РјРјС‹: '3.4.0.48729'", result);
     }
 
     [Fact]
@@ -223,7 +223,7 @@ public class LogStandardizerTests
             Time = new TimeSpan(0,15, 14, 51, 588),
             LogLevel = "INFO",
             CallingMethod = "MobileComputer.GetDeviceId",
-            Message = "Код устройства: '@MINDEO-M40-D-410244015546'",
+            Message = "РљРѕРґ СѓСЃС‚СЂРѕР№СЃС‚РІР°: '@MINDEO-M40-D-410244015546'",
             IsValid = true
         };
 
@@ -231,10 +231,10 @@ public class LogStandardizerTests
         string result = LogStandardizer.FormatOutput(entry);
 
         // Assert
-        Assert.Equal("10-03-2025\t15:14:51.588\tINFO\tMobileComputer.GetDeviceId\tКод устройства: '@MINDEO-M40-D-410244015546'", result);
+        Assert.Equal("10-03-2025\t15:14:51.588\tINFO\tMobileComputer.GetDeviceId\tРљРѕРґ СѓСЃС‚СЂРѕР№СЃС‚РІР°: '@MINDEO-M40-D-410244015546'", result);
     }
 
-    // ========== ТЕСТЫ МАППИНГА УРОВНЕЙ ==========
+    // ========== РўР•РЎРўР« РњРђРџРџРРќР“Рђ РЈР РћР’РќР•Р™ ==========
 
     [Theory]
     [InlineData("INFORMATION", "INFO")]
@@ -244,10 +244,10 @@ public class LogStandardizerTests
     public void LogLevelMapping_CorrectlyMaps(string input, string expected)
     {
         // Arrange & Act
-        string line = $"2024-01-01 00:00:00.000 {input} Тестовое сообщение";
+        string line = $"2024-01-01 00:00:00.000 {input} РўРµСЃС‚РѕРІРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ";
 
-        // Для формата 1
-        string format1Line = $"01.01.2024 00:00:00.000 {input} Тестовое сообщение";
+        // Р”Р»СЏ С„РѕСЂРјР°С‚Р° 1
+        string format1Line = $"01.01.2024 00:00:00.000 {input} РўРµСЃС‚РѕРІРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ";
 
         // Act
         var result = LogStandardizer.ParseLogLine(format1Line);
@@ -257,7 +257,7 @@ public class LogStandardizerTests
         Assert.Equal(expected, result.LogLevel);
     }
 
-    // ========== ИНТЕГРАЦИОННЫЕ ТЕСТЫ ==========
+    // ========== РРќРўР•Р“Р РђР¦РРћРќРќР«Р• РўР•РЎРўР« ==========
 
     [Fact]
     public void ProcessLogFile_MixedValidAndInvalidEntries_CreatesCorrectOutputs()
@@ -269,10 +269,10 @@ public class LogStandardizerTests
 
             var inputLines = new[]
             {
-                "10.03.2025 15:14:49.523 INFORMATION Версия программы: '3.4.0.48729'",
-                "Некорректная строка лога",
-                "2025-03-10 15:14:51.882| INFO|11|MobileComputer.GetDeviceId| Код устройства: '@MINDEO-M40-D-410244015546'",
-                "Ещё одна невалидная запись"
+                "10.03.2025 15:14:49.523 INFORMATION Р’РµСЂСЃРёСЏ РїСЂРѕРіСЂР°РјРјС‹: '3.4.0.48729'",
+                "РќРµРєРѕСЂСЂРµРєС‚РЅР°СЏ СЃС‚СЂРѕРєР° Р»РѕРіР°",
+                "2025-03-10 15:14:51.882| INFO|11|MobileComputer.GetDeviceId| РљРѕРґ СѓСЃС‚СЂРѕР№СЃС‚РІР°: '@MINDEO-M40-D-410244015546'",
+                "Р•С‰С‘ РѕРґРЅР° РЅРµРІР°Р»РёРґРЅР°СЏ Р·Р°РїРёСЃСЊ"
             };
             File.WriteAllLines(TestInputFile, inputLines);
 
@@ -293,8 +293,8 @@ public class LogStandardizerTests
             Assert.Contains("10-03-2025", outputLines[1]);
             Assert.Contains("MobileComputer.GetDeviceId", outputLines[1]);
 
-            Assert.Equal("Некорректная строка лога", problemLines[0]);
-            Assert.Equal("Ещё одна невалидная запись", problemLines[1]);
+            Assert.Equal("РќРµРєРѕСЂСЂРµРєС‚РЅР°СЏ СЃС‚СЂРѕРєР° Р»РѕРіР°", problemLines[0]);
+            Assert.Equal("Р•С‰С‘ РѕРґРЅР° РЅРµРІР°Р»РёРґРЅР°СЏ Р·Р°РїРёСЃСЊ", problemLines[1]);
         }
         finally
         {
@@ -312,8 +312,8 @@ public class LogStandardizerTests
 
             var inputLines = new[]
             {
-                "10.03.2025 15:14:49.523 INFORMATION Версия программы: '3.4.0.48729'",
-                "2025-03-10 15:14:51.882| INFO|11|MobileComputer.GetDeviceId| Код устройства: '@MINDEO-M40-D-410244015546'"
+                "10.03.2025 15:14:49.523 INFORMATION Р’РµСЂСЃРёСЏ РїСЂРѕРіСЂР°РјРјС‹: '3.4.0.48729'",
+                "2025-03-10 15:14:51.882| INFO|11|MobileComputer.GetDeviceId| РљРѕРґ СѓСЃС‚СЂРѕР№СЃС‚РІР°: '@MINDEO-M40-D-410244015546'"
             };
             File.WriteAllLines(TestInputFile, inputLines);
 
@@ -343,9 +343,9 @@ public class LogStandardizerTests
 
             var inputLines = new[]
             {
-                "Некорректная строка 1",
-                "Некорректная строка 2",
-                "Совсем не похоже на лог"
+                "РќРµРєРѕСЂСЂРµРєС‚РЅР°СЏ СЃС‚СЂРѕРєР° 1",
+                "РќРµРєРѕСЂСЂРµРєС‚РЅР°СЏ СЃС‚СЂРѕРєР° 2",
+                "РЎРѕРІСЃРµРј РЅРµ РїРѕС…РѕР¶Рµ РЅР° Р»РѕРі"
             };
             File.WriteAllLines(TestInputFile, inputLines);
 
