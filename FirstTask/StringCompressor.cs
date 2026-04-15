@@ -20,7 +20,7 @@ public class StringCompressor
 
         for (int i = 1; i <= input.Length; i++)
         {
-            // Если текущий символ совпадает с предыдущим или мы не в конце строки
+            // Если текущий символ совпадает с предыдущим и мы не в конце строки
             if (i < input.Length && input[i] == input[i - 1])
             {
                 count++;
