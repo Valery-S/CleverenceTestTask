@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FirstTask", "FirstTask\FirstTask.csproj", "{F5120260-9D2B-4C1E-B4A1-9EF0117F58D7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FirstTaskTest", "StringCompressorTests\FirstTaskTest.csproj", "{1B8EDE3E-6445-49D1-8857-D3FE6637539D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FirstTaskTest", "FirstTaskTest\FirstTaskTest.csproj", "{1B8EDE3E-6445-49D1-8857-D3FE6637539D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecondTask", "SecondTask\SecondTask.csproj", "{C2267C3E-F706-4E07-80FE-2ED3DD9999B5}"
 EndProject
