@@ -29,6 +29,7 @@ public static class LogStandardizer
         @"^(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})\s+" +
         @"(?<hour>\d{2}):(?<minute>\d{2}):(?<second>\d{2})\.(?<millisecond>\d+)\s*\|\s*" +
         @"(?<level>INFO|WARN|ERROR|DEBUG)\s*\|\s*" +
+        @"\d+\s*\|\s*" +  
         @"(?<method>[^|]+)\s*\|\s*" +
         @"(?<message>.+)$"
     );
@@ -90,18 +91,21 @@ public static class LogStandardizer
     /// </summary>
     public static LogEntry ParseLogLine(string line)
     {
-        // Попытка распознать формат 1
-        var match1 = Format1Regex.Match(line);
-        if (match1.Success)
+        if (line != null)
         {
-            return ParseFormat1(match1, line);
-        }
+            // Попытка распознать формат 1
+            var match1 = Format1Regex.Match(line);
+            if (match1.Success)
+            {
+                return ParseFormat1(match1, line);
+            }
 
-        // Попытка распознать формат 2
-        var match2 = Format2Regex.Match(line);
-        if (match2.Success)
-        {
-            return ParseFormat2(match2, line);
+            // Попытка распознать формат 2
+            var match2 = Format2Regex.Match(line);
+            if (match2.Success)
+            {
+                return ParseFormat2(match2, line);
+            }
         }
 
         // Невалидная запись
@@ -151,7 +155,7 @@ public static class LogStandardizer
     }
 
     /// <summary>
-    /// Парсинг формата 2: 2025-03-10 15:14:51.5882| INFO|11|MobileComputer.GetDeviceId| Код устройства: '@MINDEO-M40-D-410244015546'
+    /// Парсинг формата 2: 2025-03-10 15:14:51.882| INFO|11|MobileComputer.GetDeviceId| Код устройства: '@MINDEO-M40-D-410244015546'
     /// </summary>
     private static LogEntry ParseFormat2(Match match, string originalLine)
     {
@@ -215,12 +219,6 @@ public static class LogStandardizer
 
         // Время в исходном формате (часы:минуты:секунды.миллисекунды)
         string formattedTime = entry.Time.ToString(@"hh\:mm\:ss\.fff");
-
-        // Удаляем лишние точки в миллисекундах (если их больше 3)
-        if (formattedTime.Length > 12)
-        {
-            formattedTime = formattedTime.Substring(0, 12);
-        }
 
         // Формируем строку с табуляцией в качестве разделителя
         return $"{formattedDate}\t{formattedTime}\t{entry.LogLevel}\t{entry.CallingMethod}\t{entry.Message}";
